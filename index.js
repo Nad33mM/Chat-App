@@ -5,9 +5,9 @@ var path = require('path');
 var server = require('http').createServer(app);
 var io = require('socket.io')(server);
 
-var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
+var server_ip_address = process.env.OPENSHIFT_NODEJS_IP;
 
-var port = process.env.OPENSHIFT_NODEJS_PORT || 8000;
+var port = 8000;
 
 server.listen(port, server_ip_address, function () {
   console.log(server_ip_address+' listening at port %d', port);
