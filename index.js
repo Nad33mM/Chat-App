@@ -1,20 +1,32 @@
-var ipaddress = process.env.OPENSHIFT_NODEJS_IP || "127.0.0.1";
-var port      = process.env.OPENSHIFT_NODEJS_PORT || 8080;
-var http = require('http');
+//  OpenShift Node application
+var express = require('express'),
+    app = express(),
+    io = require('socket.io')(app);
+    
+Object.assign=require('object-assign')
 
-var server = http.createServer(function(request, response) {
-    console.log((new Date()) + ' Received request for ' + request.url);
-	response.writeHead(200, {'Content-Type': 'text/plain'});
-	  response.write("Welcome to Node.js on OpenShift!\n\n");
-	  response.end("Thanks for visiting us! \n");
+app.engine('html', require('ejs').renderFile);
+app.use(morgan('combined'))
+
+var port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080,
+    ipaddress   = process.env.IP   || process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0';
+}
+
+app.get('/', function (req, res) {
+	res.render('index.html', { pageCountMessage : null});
 });
 
-server.listen( port, ipaddress, function() {
-    console.log((new Date()) + ' '+ ipaddress +' is listening on port '+port);
+
+// error handling
+app.use(function(err, req, res, next){
+  console.error(err.stack);
+  res.status(500).send('Something bad happened!');
 });
 
-var io = require('socket.io')(server);
+app.listen(port, ip);
+console.log('Server running on http://%s:%s', ip, port);
 
+module.exports = app ;
 // Chatroom
 
 var numUsers = 0;
