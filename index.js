@@ -1,7 +1,8 @@
 //  OpenShift Node application
 var express = require('express'),
     app = express(),
-    io = require('socket.io')(app);
+    server = require('http').Server(app),
+    io = require('socket.io')(server);
     
 Object.assign=require('object-assign')
 
