@@ -1,8 +1,7 @@
 //  OpenShift Node application
 var express = require('express'),
     app = express(),
-    server = require('http').Server(app),
-    io = require('socket.io').listen(server);
+    io = require('socket.io').listen(app);
     
 Object.assign=require('object-assign')
 
@@ -24,8 +23,8 @@ app.use(function(err, req, res, next){
   res.status(500).send('Something bad happened!');
 });
 
-app.listen(port, ip);
-console.log('Server running on http://%s:%s', ip, port);
+app.listen(port, ipaddress);
+console.log('Server running on http://%s:%s', ipaddress, port);
 
 module.exports = app ;
 // Chatroom
