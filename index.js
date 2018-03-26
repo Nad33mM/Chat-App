@@ -10,7 +10,7 @@ var server = http.createServer(function(request, response) {
 });
 
 server.listen( port, ipaddress, function() {
-    console.log((new Date()) + ' Server is listening on port 8080');
+    console.log((new Date()) + ' '+ ipaddress +' is listening on port '+port);
 });
 
 var io = require('socket.io')(server);
