@@ -4,7 +4,7 @@ var app = express();
 //app.use(express.static('views'));
 
 app.get('/', function (req, res) {
-   res.sendfile(__dirname + '/views/index.html');
+   res.sendFile(__dirname + '/views/index.html');
 })
 
 var server = app.listen(8080, function () {
