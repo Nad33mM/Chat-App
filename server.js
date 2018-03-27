@@ -1,14 +1,24 @@
-//  OpenShift Node application
-var app = require('express'),
-    server = require('http').Server(app),
-    io = require('socket.io').listen(server);
+var express = require('express');
+var app = express();
 
-var port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080,
-    ipaddress   = process.env.IP   || process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0';
+//app.use(express.static('views'));
 
 app.get('/', function (req, res) {
-	res.sendfile(__dirname + '/views/index.html');
-});
+   res.sendfile(__dirname + '/views/index.html');
+})
+
+var server = app.listen(8080, function () {
+   var host = server.address().address
+   var port = server.address().port
+
+   console.log("Example app listening at http://%s:%s", host, port)
+
+})
+//  OpenShift Node application
+var io = require('socket.io').listen(server);
+
+//var port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080,
+ //   ipaddress   = process.env.IP   || process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0';
 
 
 // error handling
