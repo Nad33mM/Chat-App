@@ -1,28 +1,20 @@
 //  OpenShift Node application
-var express = require('express'),
-    app = express(),
-    io = require('socket.io').listen(app);
-    
-Object.assign=require('object-assign')
-
-app.engine('html', require('ejs').renderFile);
-app.use(morgan('combined'))
+var app = require('express'),
+    server = require('http').Server(app),
+    io = require('socket.io').listen(server);
 
 var port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080,
     ipaddress   = process.env.IP   || process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0';
 
 app.get('/', function (req, res) {
-	res.render('index.html');
+	res.sendfile(__dirname + '/index.html');
 });
 
 
 // error handling
-app.use(function(err, req, res, next){
-  console.error(err.stack);
-  res.status(500).send('Something bad happened!');
-});
 
-app.listen(port, ipaddress);
+
+server.listen(port, ipaddress);
 console.log('Server running on http://%s:%s', ipaddress, port);
 
 module.exports = app ;
