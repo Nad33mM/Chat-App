@@ -1,19 +1,35 @@
+var fs = require('fs');
+var http = require('http');
+var https = require('https');
+var privateKey  = fs.readFileSync('sslcert/server.key', 'utf8');
+var certificate = fs.readFileSync('sslcert/server.crt', 'utf8');
+
+var credentials = {key: privateKey, cert: certificate};
+
 var express = require('express');
 var app = express();
+
+var httpServer = http.createServer(app);
+var httpsServer = https.createServer(credentials, app);
 
 var port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080,
     ipaddress   = process.env.IP   || process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0';
 //app.use(express.static('views'));
 
+
+
 app.get('/', function (req, res) {
    res.sendFile(__dirname + '/index.html');
 })
+
+httpServer.listen(8080);
+httpsServer.listen(8443);
 
 var server = app.listen(port, ipaddress);
 console.log("App listening at http://%s:%s", ipaddress, port)
 
 //  OpenShift Node application
-var io = require('socket.io').listen(server);
+var io = require('socket.io').listen(httpsServer);
 
 
 
