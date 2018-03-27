@@ -18,14 +18,10 @@ var server = app.listen(8080, function () {
 var io = require('socket.io').listen(server);
 
 //var port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080,
- //   ipaddress   = process.env.IP   || process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0';
+ //   ipaddress   = process.env.IP   || process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
 
 
 // error handling
-
-
-server.listen(port, ipaddress);
-console.log('Server running on http://%s:%s', ipaddress, port);
 
 module.exports = app ;
 // Chatroom
